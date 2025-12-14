@@ -45,6 +45,13 @@ def stats():
     clicks = conn.execute("SELECT COUNT(*) FROM clicks").fetchone()[0]
     conn.close()
     return {"opens": opens, "clicks": clicks}
+@app.route("/unsubscribe")
+def unsubscribe():
+    email = request.args.get("email")
+    if email:
+        with open("unsubscribed.csv", "a") as f:
+            f.write(email + "\n")
+    return "You have been unsubscribed."
 
 if __name__ == "__main__":
     init_db()
